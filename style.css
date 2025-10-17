@@ -41,6 +41,12 @@ video#webcam {
   padding: 0;
 }
 
+#gesture-guide {
+  font-size: 1rem;
+  margin-top: 1rem;
+  color: #555;
+}
+
 #options-list li {
   background: #e0f7fa;
   margin: 0.5rem auto;
