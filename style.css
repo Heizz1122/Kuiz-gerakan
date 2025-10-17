@@ -22,6 +22,19 @@ video#webcam {
   border-radius: 10px;
 }
 
+#gesture-icon {
+  font-size: 3rem;
+  margin: 1rem auto;
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+#gesture-guide {
+  font-size: 1rem;
+  margin-top: 1rem;
+  color: #555;
+}
+
 #question-container {
   background: white;
   margin: 1rem auto;
@@ -39,12 +52,6 @@ video#webcam {
 #options-list {
   list-style: none;
   padding: 0;
-}
-
-#gesture-guide {
-  font-size: 1rem;
-  margin-top: 1rem;
-  color: #555;
 }
 
 #options-list li {
@@ -66,3 +73,4 @@ video#webcam {
   margin-top: 1rem;
   font-weight: bold;
 }
+
