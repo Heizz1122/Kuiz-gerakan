@@ -9,25 +9,24 @@
 <body>
   <h1>🧠 Gesture Quiz</h1>
   <video id="webcam" autoplay playsinline></video>
-  <div id="gesture-guide">
-   <p>🖐️ = Jawapan A | ✌️ = B | ☝️ = C | 🤟 = D</p>
-  </div>
   <div id="gesture-icon">✋</div>
+  <div id="gesture-guide">
+    <p>🖐️ = A | ✌️ = B | ☝️ = C | 🤟 = D</p>
+  </div>
   <div id="question-container">
     <p id="question-text">Loading question...</p>
     <ul id="options-list"></ul>
   </div>
   <p id="feedback"></p>
 
-  <!-- TensorFlow.js & Handpose -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+  <!-- MediaPipe Hands -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 
   <!-- App Scripts -->
   <script src="quiz-data.js"></script>
   <script src="gesture-classifier.js"></script>
+  <script src="gesture-feedback.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
