@@ -66,23 +66,16 @@ hands.onResults(onResults);
 // 5️⃣ Setup kamera
 async function startCamera() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { width: 320, height: 240 }
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     });
     videoElement.srcObject = stream;
 
     videoElement.onloadeddata = () => {
       const camera = new Camera(videoElement, {
-        onFrame: async () => {
-          try {
-            await hands.send({ image: videoElement });
-          } catch (err) {
-            console.error("Gesture error:", err);
-          }
-        },
-        width: 320,
-        height: 240
-      });
+  onFrame: async () => {
+    await hands.send({ image: videoElement });
+  }
+});
       camera.start();
     };
   } catch (err) {
