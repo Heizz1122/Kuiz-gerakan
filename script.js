@@ -1,5 +1,7 @@
 let currentQuestion = 0;
+const videoElement = document.getElementById('webcam');
 
+// 1️⃣ Papar soalan
 function showQuestion() {
   const q = quiz[currentQuestion];
   if (!q) {
@@ -19,6 +21,7 @@ function showQuestion() {
   });
 }
 
+// 2️⃣ Semak jawapan
 function checkAnswer(gestureIndex) {
   const correct = quiz[currentQuestion].answer;
   const feedback = document.getElementById("feedback");
@@ -38,6 +41,7 @@ function checkAnswer(gestureIndex) {
   }
 }
 
+// 3️⃣ Bila gesture dikesan
 function onResults(results) {
   if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
     const landmarks = results.multiHandLandmarks[0];
@@ -47,6 +51,7 @@ function onResults(results) {
   }
 }
 
+// 4️⃣ Setup MediaPipe Hands
 const hands = new Hands({
   locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
 });
@@ -58,14 +63,41 @@ hands.setOptions({
 });
 hands.onResults(onResults);
 
-const videoElement = document.getElementById('webcam');
-const camera = new Camera(videoElement, {
-  onFrame: async () => {
-    await hands.send({ image: videoElement });
-  },
-  width: 320,
-  height: 240
+// 5️⃣ Setup kamera
+async function startCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { width: 320, height: 240 }
+    });
+    videoElement.srcObject = stream;
+
+    videoElement.onloadeddata = () => {
+      const camera = new Camera(videoElement, {
+        onFrame: async () => {
+          try {
+            await hands.send({ image: videoElement });
+          } catch (err) {
+            console.error("Gesture error:", err);
+          }
+        },
+        width: 320,
+        height: 240
+      });
+      camera.start();
+    };
+  } catch (err) {
+    alert("❌ Tak dapat akses kamera. Sila benarkan permission.");
+    console.error("Camera error:", err);
+  }
+}
+
+// 6️⃣ Auto-restart bila user kembali ke tab
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") {
+    startCamera();
+  }
 });
 
-camera.start();
+// 7️⃣ Mula app
+startCamera();
 showQuestion();
