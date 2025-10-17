@@ -15,21 +15,25 @@ async function setup() {
 }
 
 function showQuestion() {
-  console.log("Current question:", quiz[currentQuestion]);
   const q = quiz[currentQuestion];
   if (!q) {
     document.getElementById("question-text").textContent = "❌ Soalan tak dijumpai.";
     return;
   }
+
   document.getElementById("question-text").textContent = q.question;
   const list = document.getElementById("options-list");
   list.innerHTML = "";
+
+  const gestureIcons = ["✋", "✌️", "☝️", "🤟"];
+
   q.options.forEach((opt, i) => {
     const li = document.createElement("li");
-    li.textContent = `${String.fromCharCode(65 + i)}. ${opt}`;
+    li.textContent = `${gestureIcons[i]} ${opt}`;
     list.appendChild(li);
   });
 }
+
 
 async function detectGesture() {
   const video = document.getElementById("webcam");
