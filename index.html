@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gesture Quiz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🧠 Gesture Quiz</h1>
+  <video id="webcam" autoplay playsinline></video>
+  <div id="question-container">
+    <p id="question-text">Loading question...</p>
+    <ul id="options-list"></ul>
+  </div>
+  <p id="feedback"></p>
+
+  <!-- TensorFlow.js & Handpose -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose"></script>
+
+  <!-- App Scripts -->
+  <script src="quiz-data.js"></script>
+  <script src="gesture-classifier.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
