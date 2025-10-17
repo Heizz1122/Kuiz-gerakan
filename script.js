@@ -1,21 +1,4 @@
 let currentQuestion = 0;
-let model;
-<script src="gesture-feedback.js"></script>
-
-
-
-async function setup() {
-  const video = document.getElementById("webcam");
-  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-  video.srcObject = stream;
-
-  tf.setBackend('webgl');
-  await tf.ready();
-
-  model = await handpose.load();
-  detectGesture();
-  showQuestion();
-}
 
 function showQuestion() {
   const q = quiz[currentQuestion];
@@ -29,30 +12,11 @@ function showQuestion() {
   list.innerHTML = "";
 
   const gestureIcons = ["✋", "✌️", "☝️", "🤟"];
-
   q.options.forEach((opt, i) => {
     const li = document.createElement("li");
     li.textContent = `${gestureIcons[i]} ${opt}`;
     list.appendChild(li);
   });
-}
-
-
-async function detectGesture() {
-  const video = document.getElementById("webcam");
-  const predictions = await model.estimateHands(video);
-  if (predictions.length > 0) {
-    const gesture = classifyGesture(predictions[0].landmarks);
-    checkAnswer(gesture);
-  }
-  requestAnimationFrame(detectGesture);
-
-  if (predictions.length > 0) {
-  const gesture = classifyGesture(predictions[0].landmarks);
-  showGestureIcon(gesture); // 👈 Tunjuk emoji gesture
-  checkAnswer(gesture);
-}
-
 }
 
 function checkAnswer(gestureIndex) {
@@ -74,4 +38,34 @@ function checkAnswer(gestureIndex) {
   }
 }
 
-setup();
+function onResults(results) {
+  if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+    const landmarks = results.multiHandLandmarks[0];
+    const gesture = classifyGesture(landmarks);
+    showGestureIcon(gesture);
+    checkAnswer(gesture);
+  }
+}
+
+const hands = new Hands({
+  locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+});
+hands.setOptions({
+  maxNumHands: 1,
+  modelComplexity: 1,
+  minDetectionConfidence: 0.7,
+  minTrackingConfidence: 0.7
+});
+hands.onResults(onResults);
+
+const videoElement = document.getElementById('webcam');
+const camera = new Camera(videoElement, {
+  onFrame: async () => {
+    await hands.send({ image: videoElement });
+  },
+  width: 320,
+  height: 240
+});
+
+camera.start();
+showQuestion();
