@@ -1,5 +1,8 @@
 let currentQuestion = 0;
 let model;
+<script src="gesture-feedback.js"></script>
+
+
 
 async function setup() {
   const video = document.getElementById("webcam");
@@ -43,6 +46,13 @@ async function detectGesture() {
     checkAnswer(gesture);
   }
   requestAnimationFrame(detectGesture);
+
+  if (predictions.length > 0) {
+  const gesture = classifyGesture(predictions[0].landmarks);
+  showGestureIcon(gesture); // 👈 Tunjuk emoji gesture
+  checkAnswer(gesture);
+}
+
 }
 
 function checkAnswer(gestureIndex) {
