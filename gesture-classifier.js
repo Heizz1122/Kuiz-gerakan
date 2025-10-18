@@ -9,6 +9,7 @@ function classifyGesture(landmarks) {
     dist(landmarks[12], landmarks[0]) > 0.1, // middle
     dist(landmarks[16], landmarks[0]) > 0.1, // ring
     dist(landmarks[20], landmarks[0]) > 0.1  // pinky
+    
   ];
 
   if (fingers.every(f => f)) return 0; // ✋
