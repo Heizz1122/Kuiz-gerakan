@@ -73,7 +73,11 @@ async function startCamera() {
     videoElement.onloadeddata = () => {
       const camera = new Camera(videoElement, {
   onFrame: async () => {
-    await hands.send({ image: videoElement });
+    try {
+      await hands.send({ image: videoElement });
+    } catch (err) {
+      console.error("Gesture error:", err);
+    }
   }
 });
       camera.start();
