@@ -74,3 +74,25 @@ video#webcam {
   font-weight: bold;
 }
 
+@media screen and (max-width: 600px) {
+  #question-container {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
+  #options-list li {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+
+  #gesture-icon {
+    font-size: 2rem;
+  }
+
+  video#webcam {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+
