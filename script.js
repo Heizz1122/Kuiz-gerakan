@@ -67,19 +67,18 @@ hands.onResults(onResults);
 async function startCamera() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    });
     videoElement.srcObject = stream;
 
     videoElement.onloadeddata = () => {
       const camera = new Camera(videoElement, {
-  onFrame: async () => {
-    try {
-      await hands.send({ image: videoElement });
-    } catch (err) {
-      console.error("Gesture error:", err);
-    }
-  }
-});
+        onFrame: async () => {
+          try {
+            await hands.send({ image: videoElement });
+          } catch (err) {
+            console.error("Gesture error:", err);
+          }
+        }
+      });
       camera.start();
     };
   } catch (err) {
@@ -87,6 +86,7 @@ async function startCamera() {
     console.error("Camera error:", err);
   }
 }
+
 
 // 6️⃣ Auto-restart bila user kembali ke tab
 document.addEventListener("visibilitychange", () => {
