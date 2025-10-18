@@ -91,6 +91,29 @@ document.addEventListener("visibilitychange", () => {
   }
 });
 
+let score = 0;
+
+function checkAnswer(gestureIndex) {
+  const correct = quiz[currentQuestion].answer;
+  const feedback = document.getElementById("feedback");
+
+  if (gestureIndex === correct) {
+    score++;
+    feedback.textContent = "✅ Betul!";
+    currentQuestion++;
+    if (currentQuestion < quiz.length) {
+      setTimeout(() => {
+        feedback.textContent = "";
+        showQuestion();
+      }, 1000);
+    } else {
+      feedback.textContent = `🎉 Tamat kuiz! Skor anda: ${score}/${quiz.length}`;
+    }
+  } else {
+    feedback.textContent = "❌ Salah, cuba lagi!";
+  }
+}
+
 // 7️⃣ Mula app
 startCamera();
 showQuestion();
